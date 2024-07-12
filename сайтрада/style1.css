@@ -1,0 +1,131 @@
+/* Общие стили */
+body {
+  font-family: 'Arial', sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+header {
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+main {
+  padding: 20px;
+}
+
+.crown-info {
+  margin-bottom: 60px; /* Увеличиваем отступ снизу */
+}
+
+.crown-info h2 {
+  font-size: 1.8em;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.crown-info p {
+  font-size: 1em;
+  text-align: justify;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+.crown-info p:first-letter {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #555;
+}
+
+.crown-images {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  justify-items: center;
+}
+
+.crown-images img {
+  width: 100%;
+  max-width: 400px; /* Увеличиваем максимальную ширину изображений */
+  height: auto;
+  border-radius: 20px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 40px 0;
+  width: 100%;
+}
+
+footer .footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer .footer-content .footer-links,
+footer .footer-content .social-media {
+  list-style-type: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+footer .footer-content .footer-links li,
+footer .footer-content .social-media li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+footer .footer-content .footer-links a,
+footer .footer-content .social-media a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1em;
+}
+
+footer .footer-content .footer-links a:hover,
+footer .footer-content .social-media a:hover {
+  text-decoration: underline;
+}
+
+footer p {
+  margin: 10px 0 0 0;
+  font-size: 0.9em;
+}
+
+
+

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Drawing Tool</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">MyDrawingApp</div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="page5.html">ball</a></li>
+                    <li><a href="page2.html">Netflix</a></li>
+          <li><a href="page3.html">Stranger Things</a></li>
+          <li><a href="page4.html">The Crown</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div id="main-container">
+            <div id="sidebar">
+                <img src="https://i.postimg.cc/Wb4xRHnG/10.jpg" alt="Decoration">
+            </div>
+            <div id="drawing-container">
+                <div id="toolbar">
+                    <button onclick="toolChange(0)">Free Draw</button>
+                    <button onclick="toolChange(1)">Rectangle</button>
+                    <button onclick="toolChange(2)">Circle</button>
+                    <button onclick="toolChange(3)">Filled Rectangle</button>
+                    <button onclick="toolChange(4)">Filled Circle</button>
+                    <button onclick="drawStraightLine()">Straight Line</button>
+                    <button onclick="undo()">Undo</button>
+                    <button onclick="clearCanvas()">Clear</button>
+                    <label for="brushSize">Brush Size:</label>
+                    <input type="number" id="brushSize" value="5" min="1" max="50">
+                    <label for="brushColor">Brush Color:</label>
+                    <input type="color" id="brushColor" value="#000000">
+                    <label for="brushType">Brush Type:</label>
+                    <select id="brushType">
+                        <option value="round">Round</option>
+                        <option value="square">Square</option>
+                        <option value="hair">Hair</option>
+                        <option value="cloud">Cloud</option>
+                        <option value="grass">Grass</option>
+                    </select>
+                    <label for="fontSelect">Font:</label>
+                    <select id="fontSelect">
+                        <option value="Arial">Arial</option>
+                        <option value="Courier New">Courier New</option>
+                        <option value="Georgia">Georgia</option>
+                        <option value="Times New Roman">Times New Roman</option>
+                        <option value="Verdana">Verdana</option>
+                    </select>
+                </div>
+                <canvas id="canvas" width="800" height="600"></canvas>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 MyDrawingApp. All rights reserved.</p>
+            <p>Contact us at <a href="mailto:info@mydrawingapp.com">info@mydrawingapp.com</a></p>
+        </div>
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let isDrawing = false;
+        let x1, y1, x2, y2;
+        let tool = 0; // Default tool
+        let brushSize = document.getElementById('brushSize').value;
+        let brushColor = document.getElementById('brushColor').value;
+        let brushType = document.getElementById('brushType').value;
+        let font = document.getElementById('fontSelect').value;
+        let history = [];
+
+        document.getElementById('brushSize').addEventListener('input', (e) => {
+            brushSize = e.target.value;
+            ctx.lineWidth = brushSize;
+        });
+
+        document.getElementById('brushColor').addEventListener('input', (e) => {
+            brushColor = e.target.value;
+            ctx.strokeStyle = brushColor;
+            ctx.fillStyle = brushColor;
+        });
+
+        document.getElementById('brushType').addEventListener('input', (e) => {
+            brushType = e.target.value;
+        });
+
+        document.getElementById('fontSelect').addEventListener('input', (e) => {
+            font = e.target.value;
+            ctx.font = `${brushSize}px ${font}`;
+        });
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            x1 = e.offsetX;
+            y1 = e.offsetY;
+            saveState();
+            if (tool === 0 || tool === 5) {
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+            }
+        });
+
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+
+        function draw(e) {
+            if (!isDrawing) return;
+            x2 = e.offsetX;
+            y2 = e.offsetY;
+            switch (tool) {
+                case 0:
+                    if (brushType === 'hair') {
+                        drawHairBrush(x1, y1, x2, y2);
+                    } else if (brushType === 'cloud') {
+                        drawCloudBrush(x1, y1, x2, y2);
+                    } else if (brushType === 'grass') {
+                        drawGrassBrush(x1, y1, x2, y2);
+                    } else {
+                        ctx.lineTo(x2, y2);
+                        ctx.stroke();
+                    }
+                    x1 = x2;
+                    y1 = y2;
+                    break;
+                case 1:
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    restoreState();
+                    ctx.beginPath();
+                    ctx.rect(x1, y1, x2 - x1, y2 - y1);
+                    ctx.stroke();
+                    break;
+                case 2:
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    restoreState();
+                    const radius = Math.hypot(x2 - x1, y2 - y1);
+                    ctx.beginPath();
+                    ctx.arc(x1, y1, radius, 0, Math.PI * 2);
+                    ctx.stroke();
+                    break;
+                case 3:
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    restoreState();
+                    ctx.fillRect(x1, y1, x2 - x1, y2 - y1);
+                    break;
+                case 4:
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    restoreState();
+                    const fillRadius = Math.hypot(x2 - x1, y2 - y1);
+                    ctx.beginPath();
+                    ctx.arc(x1, y1, fillRadius, 0, Math.PI * 2);
+                    ctx.fill();
+                    break;
+                case 5:
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    restoreState();
+                    ctx.beginPath();
+                    ctx.moveTo(x1, y1);
+                    ctx.lineTo(x2, y2);
+                    ctx.stroke();
+                    break;
+            }
+        }
+
+        function drawHairBrush(x1, y1, x2, y2) {
+            ctx.strokeStyle = brushColor;
+            ctx.lineWidth = brushSize;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                ctx.moveTo(x1, y1 + i * 2);
+                ctx.lineTo(x2, y2 + i * 2);
+                ctx.stroke();
+            }
+        }
+
+        function drawCloudBrush(x1, y1, x2, y2) {
+            ctx.fillStyle = brushColor;
+            ctx.beginPath();
+            ctx.arc(x1, y1, brushSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x1 + brushSize / 2, y1 - brushSize / 2, brushSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x1 + brushSize, y1, brushSize, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        function drawGrassBrush(x1, y1, x2, y2) {
+            ctx.strokeStyle = brushColor;
+            ctx.lineWidth = brushSize;
+            for (let i = 0; i < 5; i++) {
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x1 + Math.random() * brushSize, y1 - Math.random() * brushSize * 2);
+                ctx.stroke();
+            }
+        }
+
+        function toolChange(selectedTool) {
+            tool = selectedTool;
+        }
+
+        function drawStraightLine() {
+            tool = 5;
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            history = [];
+        }
+
+        function saveState() {
+            history.push(canvas.toDataURL());
+        }
+
+        function restoreState() {
+            if (history.length > 0) {
+                const lastState = new Image();
+                lastState.src = history[history.length - 1];
+                lastState.onload = () => {
+                    ctx.drawImage(lastState, 0, 0);
+                };
+            }
+        }
+
+        function undo() {
+            if (history.length > 0) {
+                history.pop();
+                restoreState();
+            }
+        }
+
+        document.getElementById("brushSize").onkeydown = function(e) {
+            if (!((e.which >= 48 && e.which <= 57) || (e.which >= 96 && e.which <= 105) || e.which == 8)) {
+                e.preventDefault();
+            }
+        }
+    </script>
+</body>
+</html>

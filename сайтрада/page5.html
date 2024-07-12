@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Breakout Brick Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        header {
+            background-color: #1B5E20;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: #388E3C;
+        }
+
+        #gameContainer {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #gameCanvas {
+            border: 1px solid #ccc;
+            background-color: #E8F5E9;
+        }
+
+        #controlsContainer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #1B5E20;
+            color: white;
+            width: 100%;
+        }
+
+        #controlsContainer button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #388E3C;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        #controlsContainer button:hover {
+            background-color: #1B5E20;
+        }
+
+        #controlsContainer #upgrades {
+            margin-top: 10px;
+        }
+
+        #score, #level {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: #1B5E20;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .footer-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .footer-section p {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#">Home</a>
+            <a href="page2.html">Netflix</a>
+            <a href="page3.html">Stranger Things</a>
+            <a href="page4.html">The Crown</a>
+            <a href="page6.html">Drawing</a>
+        </nav>
+        <h1>Breakout Brick Game</h1>
+    </header>
+
+    <div id="gameContainer">
+        <canvas id="gameCanvas" width="800" height="600"></canvas>
+    </div>
+
+    <div id="controlsContainer">
+        <button id="startButton" onclick="startGame()">Start</button>
+        <button id="restartButton" onclick="restartGame()">Restart</button>
+        <div id="upgrades">
+            <button id="speedButton" onclick="buySpeed()" disabled>Buy Speed (30 points)</button>
+            <button id="extraBallButton" onclick="buyExtraBall()" disabled>Buy Extra Ball (50 points)</button>
+            <button id="superBonusButton" onclick="activateSuperBonus()" disabled>Super Bonus (10 points)</button>
+        </div>
+        <div id="score">Score: <span id="scoreValue">0</span></div>
+        <div id="level">Level: <span id="levelValue">1</span></div>
+    </div>
+
+    <footer>
+        <div class="footer-section">
+            <p>Follow Us:</p>
+            <a href="#">Facebook</a>
+            <a href="#">Twitter</a>
+            <a href="#">Instagram</a>
+            <a href="#">YouTube</a>
+        </div>
+        <div class="footer-section">
+            <p>Contact Us:</p>
+            <a href="mailto:contact@example.com">Email</a>
+            <a href="tel:+123456789">Phone</a>
+        </div>
+        <div class="footer-section">
+            <p>Legal:</p>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+        </div>
+    </footer>
+
+    <script src="game.js"></script>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Initialization of variables
+        const ballRadius = 10;
+        let x = canvas.width / 2;
+        let y = canvas.height - 30;
+        let dx = 5; // Increased ball movement speed
+        let dy = -5; // Increased ball movement speed
+
+        const paddleHeight = 15;
+        let paddleWidth = 120; // Change of paddle width
+        let paddleX = (canvas.width - paddleWidth) / 2;
+
+        let rightPressed = false;
+        let leftPressed = false;
+
+        const brickRowCount = 5;
+        const brickColumnCount = 9;
+        const brickWidth = 75;
+        const brickHeight = 20;
+        const brickPadding = 10;
+        const brickOffsetTop = 30;
+        const brickOffsetLeft = 30;
+
+        let bricks = [];
+        let score = 0;
+        let level = 1;
+        let speedMultiplier = 1;
+        let extraBalls = 1;
+        const scoreDisplay = document.getElementById("scoreValue");
+        const levelDisplay = document.getElementById("levelValue");
+
+        // Creating an array of bricks
+        function initBricks() {
+            for (let c = 0; c < brickColumnCount; c++) {
+                bricks[c] = [];
+                for (let r = 0; r < brickRowCount; r++) {
+                    bricks[c][r] = { x: 0, y: 0, status: 1 };
+                }
+            }
+        }
+
+        initBricks();
+
+        // Event handlers for keys
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
+
+        function keyDownHandler(e) {
+            if (e.key === "Right" || e.key === "ArrowRight") {
+                rightPressed = true;
+            } else if (e.key === "Left" || e.key === "ArrowLeft") {
+                leftPressed = true;
+            }
+        }
+
+        function keyUpHandler(e) {
+            if (e.key === "Right" || e.key === "ArrowRight") {
+                rightPressed = false;
+            } else if (e.key === "Left" || e.key === "ArrowLeft") {
+                leftPressed = false;
+            }
+        }
+
+        // Functions for drawing game elements
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+            ctx.fillStyle = "#1B5E20";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawPaddle() {
+            ctx.beginPath();
+            ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+            ctx.fillStyle = "#1B5E20";
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        function drawBricks() {
+            for (let c = 0; c < brickColumnCount; c++) {
+                for (let r = 0; r < brickRowCount; r++) {
+                    if (bricks[c][r].status === 1) {
+                        const brickX = (c * (brickWidth + brickPadding)) + brickOffsetLeft;
+                        const brickY = (r * (brickHeight + brickPadding)) + brickOffsetTop;
+                        bricks[c][r].x = brickX;
+                        bricks[c][r].y = brickY;
+                        ctx.beginPath();
+                        ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                        ctx.fillStyle = "#1B5E20";
+                        ctx.fill();
+                        ctx.closePath();
+                    }
+                }
+            }
+        }
+
+        // Collision detection
+        function collisionDetection() {
+            for (let c = 0; c < brickColumnCount; c++) {
+                for (let r = 0; r < brickRowCount; r++) {
+                    const b = bricks[c][r];
+                    if (b.status === 1) {
+                        if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
+                            dy = -dy;
+                            b.status = 0;
+                            score++;
+                            scoreDisplay.textContent = score;
+                            if (score >= 30) {
+                                document.getElementById("speedButton").disabled = false;
+                            }
+                            if (score >= 50) {
+                                document.getElementById("extraBallButton").disabled = false;
+                            }
+                            if (score >= 10) {
+                                document.getElementById("superBonusButton").disabled = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Check for remaining bricks
+        function checkBricks() {
+            for (let c = 0; c < brickColumnCount; c++) {
+                for (let r = 0; r < brickRowCount; r++) {
+                    if (bricks[c][r].status === 1) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        // Proceed to the next level
+        function nextLevel() {
+            level++;
+            levelDisplay.textContent = level;
+            speedMultiplier += 0.5;
+            dx = 5 * speedMultiplier;
+            dy = -5 * speedMultiplier;
+            paddleWidth -= 10;
+            if (paddleWidth < 60) {
+                paddleWidth = 60;
+            }
+            paddleX = (canvas.width - paddleWidth) / 2;
+            initBricks();
+            x = canvas.width / 2;
+            y = canvas.height - 30;
+        }
+
+        // Main game drawing and logic function
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBricks();
+            drawBall();
+            drawPaddle();
+            collisionDetection();
+
+            if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+                dx = -dx;
+            }
+
+            if (y + dy < ballRadius) {
+                dy = -dy;
+            } else if (y + dy > canvas.height - ballRadius) {
+                if (x > paddleX && x < paddleX + paddleWidth) {
+                    dy = -dy;
+                } else {
+                    // Game Over
+                    alert("Game Over");
+                    document.location.reload();
+                }
+            }
+
+            if (rightPressed && paddleX < canvas.width - paddleWidth) {
+                paddleX += 7;
+            } else if (leftPressed && paddleX > 0) {
+                paddleX -= 7;
+            }
+
+            x += dx;
+            y += dy;
+
+            if (checkBricks()) {
+                nextLevel();
+            }
+
+            requestAnimationFrame(draw);
+        }
+
+        function startGame() {
+            document.getElementById("startButton").style.display = "none";
+            draw();
+        }
+
+        function restartGame() {
+            document.location.reload();
+        }
+
+        function buySpeed() {
+            if (score >= 30) {
+                score -= 30;
+                scoreDisplay.textContent = score;
+                speedMultiplier++;
+                dx = 5 * speedMultiplier;
+                dy = -5 * speedMultiplier;
+                document.getElementById("speedButton").disabled = true;
+            } else {
+                alert("Not enough points to buy speed upgrade.");
+            }
+        }
+
+        function buyExtraBall() {
+            if (score >= 50) {
+                score -= 50;
+                scoreDisplay.textContent = score;
+                extraBalls++;
+                document.getElementById("extraBallButton").disabled = true;
+            } else {
+                alert("Not enough points to buy extra ball.");
+            }
+        }
+
+        function activateSuperBonus() {
+            if (score >= 10) {
+                score -= 10;
+                scoreDisplay.textContent = score;
+                ballRadius += 5; // Increase the ball radius
+                document.getElementById("superBonusButton").disabled = true;
+            } else {
+                alert("Not enough points to activate super bonus.");
+            }
+        }
+    </script>
+</body>
+</html>

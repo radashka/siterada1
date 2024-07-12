@@ -1,0 +1,468 @@
+/* Основные стили */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+header {
+  background-color: #333;
+  color: white;
+  padding: 10px 0;
+  text-align: center;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 5px 10px;
+}
+
+nav ul li a:hover {
+  background-color: #555;
+  border-radius: 5px;
+}
+
+main {
+  padding: 20px;
+}
+
+main h2 {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 2em;
+}
+
+section {
+  margin-bottom: 40px;
+  padding: 0 10%;
+}
+
+.about {
+  text-align: center;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.img-container {
+  flex: 1 1 calc(33% - 40px);
+  box-sizing: border-box;
+  margin: 10px;
+  text-align: center;
+}
+
+.img-container img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.blog article {
+  margin-bottom: 20px;
+}
+
+.newsletter {
+  text-align: center;
+}
+
+.newsletter form {
+  display: inline-block;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  padding: 40px 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.footer-content div {
+  flex: 1 1 200px;
+  margin: 10px;
+}
+
+.footer-content h2 {
+  border-bottom: 1px solid #555;
+  padding-bottom: 10px;
+}
+
+.footer-content p,
+.footer-content a,
+.footer-content label {
+  color: #ddd;
+}
+
+.footer-content a {
+  display: block;
+  margin: 5px 0;
+  text-decoration: none;
+}
+
+.footer-content a:hover {
+  color: white;
+}
+
+.footer-content form {
+  display: flex;
+  flex-direction: column;
+}
+
+.footer-content input,
+.footer-content button {
+  margin-top: 10px;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid #555;
+  padding-top: 10px;
+}
+
+/* Размеры изображений и контейнера */
+.img-container {
+  width: 300px; /* Задайте нужную ширину */
+  height: 300px; /* Задайте нужную высоту */
+  overflow: hidden;
+  position: relative;
+}
+
+/* Анимация при наведении */
+.img-container img {
+  transition: transform 0.3s ease;
+}
+
+.img-container:hover img {
+  transform: scale(1.1);
+}
+
+/* Скрытая информация */
+.img-info {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.img-info.active {
+  display: flex;
+}
+
+/* Стили для страницы о сериале */
+.serial-info {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.serial-info h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+
+.serial-info p {
+  font-size: 1.2em;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+.serial-info img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.trailers,
+.gallery {
+  margin: 40px 10%;
+}
+
+.trailers h2,
+.gallery h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.trailers iframe,
+.gallery img {
+  display: block;
+  margin: 20px auto;
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Стили для кликера */
+#clicker {
+  text-align: center;
+  margin-top: 40px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-image: url("https://i.postimg.cc/3JVSrBWy/movie-background.jpg");
+  background-size: cover;
+  color: white;
+}
+
+.clicker-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.clicker-button {
+  display: inline-block;
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  font-size: 1.2em;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 10px;
+}
+
+.clicker-button:hover {
+  background-color: #555;
+}
+
+.clicker-img {
+  width: 100px;
+  height: auto;
+  vertical-align: middle;
+  margin-right: 50px;
+}
+
+/* Анимация для призового сообщения */
+.prize-message {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  animation: fadeIn 1s forwards;
+}
+
+.prize-message.show {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Дополнительные стили для текста на всем сайте */
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Georgia", serif;
+  color: #444;
+}
+
+p,
+li {
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+/* Увеличенные отступы в разделе интересных фактов о Riverdale */
+.riverdale-facts {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #eee;
+  border-radius: 10px;
+  list-style: none;
+}
+
+.riverdale-facts li {
+  margin-bottom: 10px;
+  font-size: 1.1em;
+  padding: 5px 0;
+}
+
+.netflix-history {
+  padding: 50px 0;
+  background-color: #f2f2f2;
+}
+
+.netflix-info {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.netflix-info h2 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+.netflix-info p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: #555;
+  margin-bottom: 20px;
+}
+.netflix-image {
+  width: 100%; /* Чтобы картинки занимали всю ширину контейнера */
+  height: auto; /* Автоматическое подстраивание высоты для сохранения пропорций */
+  display: block; /* Чтобы избежать лишних пробелов вокруг изображения */
+}
+/* Общие стили для страницы */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 2.5em;
+  margin: 0;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+.main-content {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-content h2 {
+  font-size: 2em;
+  margin-top: 0;
+}
+
+.main-content p {
+  line-height: 1.6;
+}
+
+.stranger-things-images {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.stranger-things-images img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+footer p {
+  margin: 0;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.footer-content > div {
+  flex: 1;
+  margin: 10px;
+}
+
+.social-media a {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.social-media a:hover {
+  text-decoration: underline;
+}
+
+/* style.css */

@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f0f4f8;
+}
+
+header, footer {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 0;
+}
+
+header .container, footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+header nav ul li a:hover {
+    color: #ccc;
+}
+
+#main-container {
+    display: flex;
+    align-items: flex-start;
+    flex-grow: 1;
+    padding: 20px;
+}
+
+#sidebar {
+    margin-right: 20px;
+}
+
+#sidebar img {
+    width: 100px;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#drawing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#toolbar {
+    margin-bottom: 10px;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+#toolbar button, #toolbar input, #toolbar select {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#toolbar button:hover, #toolbar input:hover, #toolbar select:hover {
+    background-color: #0056b3;
+}
+
+#toolbar button:active, #toolbar input:active, #toolbar select:active {
+    background-color: #003f7f;
+}
+
+#toolbar input[type="number"], #toolbar input[type="color"], #toolbar select {
+    color: #000000;
+    background-color: #ffffff;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+#canvas {
+    border: 2px solid #007bff;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+footer .container p {
+    margin: 0;
+}
+
+footer .container a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer .container a:hover {
+    text-decoration: underline;
+}

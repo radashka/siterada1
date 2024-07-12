@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>САЙТ О КИНО</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      let clicks = 0;
+      let clickMultiplier = 1;
+
+      function openClicker() {
+        document.getElementById('clicker').style.display = 'block';
+      }
+
+      function incrementClick() {
+        clicks += clickMultiplier;
+        document.getElementById('click-count').innerText = clicks;
+        checkBonuses();
+      }
+
+      function checkBonuses() {
+        if (clicks >= 50) {
+          document.getElementById('bonus-button').disabled = false;
+        }
+        if (clicks >= 100) {
+          document.getElementById('super-bonus-button').disabled = false;
+        }
+        if (clicks >= 500) {
+          document.getElementById('prize-button').disabled = false;
+        }
+      }
+
+      function applyBonus() {
+        if (clicks >= 50) {
+          clicks -= 50;
+          clickMultiplier = 2;
+          document.getElementById('click-count').innerText = clicks;
+          document.getElementById('bonus-button').disabled = true;
+          checkBonuses();
+        }
+      }
+
+      function applySuperBonus() {
+        if (clicks >= 100) {
+          clicks -= 100;
+          clickMultiplier = 3;
+          document.getElementById('click-count').innerText = clicks;
+          document.getElementById('super-bonus-button').disabled = true;
+          checkBonuses();
+        }
+      }
+
+      function showPrize() {
+        if (clicks >= 500) {
+          clicks -= 500;
+          document.getElementById('prize-button').disabled = true;
+          document.getElementById('prize-message').classList.add('show');
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <h1>Добро пожаловать на наш сайт о Кино</h1>
+      <nav>
+        <ul>
+          <li><a href="#">Главная</a></li>
+          <li><a href="page2.html">Netflix</a></li>
+          <li><a href="page3.html">Stranger Things</a></li>
+          <li><a href="page4.html">The Crown</a></li>
+          <li><a href="page6.html">Drawing</a></li>
+          <li><a href="page5.html">ball</a></li>
+          <li><a href="https://www.figma.com/design/1WHdevpcO7yzuhAZUsBCKI/Untitled?node-id=0-1&t=kmQMGsXKXXTvxh3E-1">my creativity</a></li>
+          <li><a href="#" onclick="openClicker()">Игра</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="about">
+        <h2>О нас</h2>
+        <p>
+          Наш сайт посвящен всему, что связано с миром кино. Здесь вы найдете
+          обзоры новых фильмов, интересные статьи о кинематографе и многое
+          другое.
+        </p>
+        <p>
+          Наши партнеры: <a href="https://www.figma.com/proto/HLIKfvAbmodAtJHaLjlj8V/Untitled?node-id=12-2&t=5ODGkezhvxAgb8fP-1&scaling=min-zoom&content-scaling=fixed&page-id=0%3A1&starting-point-node-id=12%3A2" target="_blank">Figma</a>
+        </p>
+        <h2>Интересные факты о Riverdale</h2>
+        <ul class="riverdale-facts">
+          <li>Шоу основано на персонажах комиксов Archie Comics.</li>
+          <li>Первый эпизод вышел в эфир 26 января 2017 года.</li>
+          <li>Съемки сериала проходят в Ванкувере, Канада.</li>
+          <li>Камила Мендес, играющая Веронику Лодж, получила роль после всего лишь трех месяцев профессиональной актерской карьеры.</li>
+          <li>Каждый сезон шоу вдохновлен различными кинематографическими жанрами.</li>
+        </ul>
+      </section>
+
+      <section id="clicker" style="display: none;">
+        <h2>Кликер Игра</h2>
+        <p>Кликов: <span id="click-count">0</span></p>
+        <div class="clicker-buttons">
+          <button onclick="applyBonus()" id="bonus-button" class="clicker-button" disabled>Удвоить клики (50 кликов)</button>
+          <button onclick="incrementClick()" class="clicker-button">
+            <img src="https://i.postimg.cc/CLz0YXKC/images-2.jpg" alt="Клик" class="clicker-img" />
+            Клик
+          </button>
+          <button onclick="applySuperBonus()" id="super-bonus-button" class="clicker-button" disabled>Утроить клики (100 кликов)</button>
+        </div>
+        <button onclick="showPrize()" id="prize-button" class="clicker-button" disabled>Приз (500 кликов)</button>
+        <div id="prize-message" class="prize-message">
+          <p>Вы выиграли автографы главных актеров!</p>
+          <img src="https://i.postimg.cc/CK5YPbhS/riverdale-autographs.jpg" alt="Автографы актеров" />
+        </div>
+      </section>
+
+      <section class="gallery">
+        <div class="img-container">
+          <a href="page1.html">
+            <img
+              id="img1"
+              src="https://i.postimg.cc/sDGg62Rx/50278557-2620026.jpg"
+              alt="картинка1"
+            />
+          </a>
+        </div>
+        <div class="img-container">
+          <a href="page1.html">
+            <img
+              id="img2"
+              src="https://i.postimg.cc/505tmKc3/image.jpg"
+              alt="картинка2"
+            />
+          </a>
+        </div>
+        <div class="img-container">
+          <a href="page1.html">
+            <img
+              id="img3"
+              src="https://i.postimg.cc/ZqqFc5Ss/riverdejl-zakroyut-v-2023-godu-1652964961401199581.jpg"
+              alt="картинка3"
+            />
+          </a>
+        </div>
+      </section>
+
+      <section class="blog">
+        <h2>Блог</h2>
+        <article>
+          <h3>Последние новости кино</h3>
+          <p>Текст статьи о последних новостях в мире кино...</p>
+        </article>
+        <article>
+          <h3>Рецензия на новый фильм</h3>
+          <p>Текст рецензии на новый фильм...</p>
+        </article>
+      </section>
+
+      <section class="newsletter">
+        <h2>Подписка на новости</h2>
+        <form>
+          <label for="email">Введите ваш email:</label>
+          <input type="email" id="email" name="email" required />
+          <button type="submit">Подписаться</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-content">
+        <div class="contact-info">
+          <h2>Контактная информация</h2>
+          <p>Телефон: +7 (123) 456-78-90</p>
+          <p>Email: info@kino.com</p>
+          <p>Адрес: ул. Примерная, д. 1, Москва, Россия</p>
+        </div>
+        <div class="social-media">
+          <h2>Мы в социальных сетях</h2>
+          <a href="https://www.facebook.com" target="_blank">Facebook</a>
+          <a href="https://www.twitter.com" target="_blank">Twitter</a>
+          <a href="https://www.instagram.com" target="_blank">Instagram</a>
+          <a href="https://www.youtube.com" target="_blank">YouTube</a>
+          <a href="https://t.me/+b6XK9Dqo2_xiZTA6" target="_blank">Telegram</a>
+        </div>
+        <div class="site-map">
+          <h2>Карта сайта</h2>
+          <ul>
+            <li><a href="#">Главная</a></li>
+            <li><a href="#">О нас</а></li>
+            <li><a href="#">Фильмы</а></li>
+            <li><a href="#">Новости</а></li
+            </ul>
+          </div>
+        <div class="newsletter-signup">
+          <h2>Подписка на новости</h2>
+          <form>
+            <label for="footer-email">Введите ваш email:</label>
+            <input
+              type="email"
+              id="footer-email"
+              name="footer-email"
+              required
+            />
+            <button type="submit">Подписаться</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 Сайт о Кино. Все права защищены.</p>
+      </div>
+    </footer>
+  </body>
+</html>
